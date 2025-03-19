@@ -1,12 +1,10 @@
-import { useState } from 'react';
-
 import './App.css'
+import Socket from './components/Socket'
 
 function App() {
-
   return (
     <>
-      Project 2
+      <Socket/>
     </>
   )
 }
