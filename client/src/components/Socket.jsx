@@ -1,126 +1,128 @@
-import { useState, useEffect, useRef } from "react";
-import {
-    Paper,
-    CardHeader,
-    CardContent,
-    Typography,
-    TextField,
-    Button
-} from "@mui/material";
+// import { useState, useEffect, useRef } from "react";
+// import {
+//   Paper,
+//   CardHeader,
+//   CardContent,
+//   Typography,
+//   TextField,
+//   Button,
+// } from "@mui/material";
 
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
-const Socket = () => {
+// const Socket = () => {
+//   /* Chat Log */
 
-    /* Chat Log */
+//   const [chatLog, setChatLog] = useState([]);
 
-    const [chatLog, setChatLog] = useState([]);
+//   // https://react.dev/reference/react/useState#setstate
+//   // If you pass a function as nextState, it will be treated as an updater function
+//   // It should take the pending state as its only argument and return the next state
+//   const appendToChatLog = (newLine) =>
+//     setChatLog((currentLog) => [...currentLog, newLine]);
+//   const renderChatLog = () =>
+//     chatLog.map((line, index) => (
+//       <div key={index}>
+//         <Typography variant="h6">{line}</Typography>
+//       </div>
+//     ));
 
-    // https://react.dev/reference/react/useState#setstate
-    // If you pass a function as nextState, it will be treated as an updater function
-    // It should take the pending state as its only argument and return the next state
-    const appendToChatLog = newLine => setChatLog(currentLog => [...currentLog, newLine]);
-    const renderChatLog = () => chatLog.map((line, index) => <div key={index}>
-        <Typography variant="h6">{line}</Typography>
-    </div>);
+//   /* Log In */
+//   const [userName, setUserName] = useState("");
 
-    /* Log In */
+//   const [joined, setJoined] = useState(false);
 
-    // (1) State for room joining data
-    const [userName, setUserName] = useState("");
+//   /* Room */
+//   const [roomName, setRoomName] = useState("");
 
-    /* Room */
-    const [roomName, setRoomName] = useState("");
+//   /* WebSocket */
 
-    const [hasJoined, setHasJoined] = useState(false);
+//   // https://react.dev/reference/react/useRef
+//   // useRef is a React Hook that lets you reference a value that’s not needed for rendering
+//   const effectRan = useRef(false);
+//   const socket = useRef();
 
-    /* WebSocket */
+//   const connectToServer = () => {
+//     if (effectRan.current) return; // Don't run twice with Strict Mode
 
-    // https://react.dev/reference/react/useRef
-    // useRef is a React Hook that lets you reference a value that’s not needed for rendering
-    const effectRan = useRef(false);
-    const socket = useRef();
+//     try {
+//       const wsServerAddress =
+//         window.location.port == 5173 ? "localhost:9000" : "/";
+//       const ws = io.connect(wsServerAddress, {
+//         forceNew: true,
+//         transports: ["websocket"],
+//       });
 
-    const connectToServer = () => {
-        if (effectRan.current) return; // Don't run twice with Strict Mode
+//       ws.on("join", (data) => {
+//         setRoomName(data.room);
+//         setJoined(true);
+//         appendToChatLog(`${data.userName} has joined ${data.room}`);
+//       });
 
-        try {
-            // Only use localhost:9000 if the app is being hosted on port 5173 (i.e. Vite)
-            const wsServerAddress = window.location.port == 5173 ? "localhost:9000" : "/";
-            const ws = io.connect(wsServerAddress, {
-                forceNew: true,
-                transports: ["websocket"],
-            });
+//       socket.current = ws;
+//       effectRan.current = true;
+//     } catch (e) {
+//       console.warn(e);
+//     }
+//   };
 
-            // (2) Listeners for chat room joining and log updates
-            ws.on("room update", (data) => {
-                appendToChatLog(`${data.userName} has joined ${data.roomName}`);
-            });
+//   const joinRoom = () => {
+//     // (3) Emit join request to the server
+//     if (userName && roomName) {
+//       socket.current.emit("join", { roomName, userName });
+//     }
+//   };
 
-            socket.current = ws;
-            effectRan.current = true; // Flag to prevent connecting twice
-        }
-        catch (e) {
-            console.warn(e);
-        }
-    };
+//   /* Component Life Cycle */
 
-    const joinRoom = () => {
-        // (3) Emit join request to the server
-        if (!hasJoined.current) {
-            socket.current.emit("join", { roomName, userName });
-            setHasJoined(true);
-        }
-    }
+//   useEffect(() => {
+//     connectToServer();
+//   }, []);
 
-    /* Component Life Cycle */
+//   /* Component Rendering - These will become their own components */
 
-    useEffect(() => {
-        connectToServer();
-    }, []);
+//   const renderLogInWindow = () => (
+//     <Paper elevation={4} sx={{ mt: "1em" }}>
+//       <CardContent>
+//         <CardHeader title="Join Chat Room" />
+//         <TextField
+//           fullWidth
+//           label="User Name"
+//           sx={{ mb: "1em" }}
+//           value={userName} // (5) Needs to connect with (1)
+//           onChange={(e) => setUserName(e.target.value)} // (5) Needs to connect with (1)
+//         />
+//         <TextField
+//           fullWidth
+//           label="Room Name"
+//           sx={{ mb: "1em" }}
+//           value={roomName} // (5) Needs to connect with (1)
+//           onChange={(e) => setRoomName(e.target.value)} // (5) Needs to connect with (1)
+//         />
 
-    /* Component Rendering - These will become their own components */
+//         {/* Needs to be disabled until both user name and room name exist */}
+//         <Button
+//           fullWidth
+//           variant="contained"
+//           onClick={joinRoom} // (6) Needs to connect with (3) to emit the join request
+//           disabled={!userName || !roomName} // Disable if fields are empty
+//         >
+//           Join Room
+//         </Button>
+//       </CardContent>
+//     </Paper>
+//   );
 
-    const renderLogInWindow = () => (
-        <Paper elevation={4} sx={{ mt: "1em" }}>
-            <CardContent>
-                <CardHeader title="Join Chat Room" />
-                <TextField fullWidth label="User Name"
-                    sx={{ mb: "1em" }}
-                    value= {userName} // (5) Needs to connect with (1)
-                    onChange={(e) => setUserName(e.target.value)} // (5) Needs to connect with (1)
-                />
-                <TextField fullWidth label="Room Name"
-                    sx={{ mb: "1em" }}
-                    value={roomName} // (5) Needs to connect with (1)
-                    onChange={(e) => setRoomName(e.target.value)} // (5) Needs to connect with (1)
-                />
-                
-                {/* Needs to be disabled until both user name and room name exist */}
-                <Button
-                    fullWidth
-                    variant="contained"
-                    disabled={!userName || !roomName} // Disable button until both fields are filled
-                    onClick={joinRoom} // Call joinRoom() only when clicked
-                >
-                    Join Room
-                </Button>
-            </CardContent>
-        </Paper >
-    );
+//   const renderChatWindow = () => (
+//     <Paper elevation={4} sx={{ mt: "1em" }}>
+//       <CardHeader title={roomName} />
+//       <CardContent>{renderChatLog()}</CardContent>
+//     </Paper>
+//   );
 
-    const renderChatWindow = () => (
-        <Paper elevation={4} sx={{ mt: "1em" }}>
-            <CardHeader title={roomName} />
-            <CardContent>
-                {renderChatLog()}
-            </CardContent>
-        </Paper>
-    );
+//   /* App Rendering */
 
-    /* App Rendering */
+//   return joined ? renderChatWindow() : renderLogInWindow();
+// };
 
-    return hasJoined ? renderChatWindow() : renderLogInWindow();
-};
-
-export default Socket;
+// export default Socket;
