@@ -1,6 +1,6 @@
 # TextRoom (or TextMe): A web-based chat service with React.js
 
-This project is a client-server, online chat room messanger web application developed using React and NodeJS (JS ES6+).
+This project is a client-server, online chat room messanger web application developed using React for frontend services and Express for backend services (JS ES6+). All real-time events are handled with Socket.IO.
 
 Features:
 - Enter a room to start chatting
