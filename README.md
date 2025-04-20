@@ -2,12 +2,12 @@
 
 This project is a client-server, online chat room messanger web application developed using React for frontend services and Express for backend services (JS ES6+). All real-time events are handled with Socket.IO.
 
-Features:
+## Features (All events are asynchronous)
 - Enter a room to start chatting
-- Send / Receive real-time messages
+- Send / Receive messages
+- View room details (Users list)
 - Edit / Delete messages
-- Users list in each room
-- Real-time "Typing" Indicator
+- "Typing" Indicator
 
 <img width="49%" alt="Screenshot 2025-04-20 at 3 04 30 PM" src="https://github.com/user-attachments/assets/8a2c43fb-da82-4b2c-8029-fc21b26e722f" />
 <img width="49%" alt="Screenshot 2025-04-20 at 3 04 50 PM" src="https://github.com/user-attachments/assets/7b250eeb-526a-447a-a47e-7086811f6485" />
