@@ -1,6 +1,6 @@
 # TextRoom (or TextMe): A web-based chat service with React.js
 
-This project is an online chat room messanger web application developed using React.
+This project is a client-server, online chat room messanger web application developed using React and NodeJS (JS ES6+).
 
 Features:
 - Enter a room to start chatting
@@ -9,8 +9,10 @@ Features:
 - Users list in each room
 - Real-time "Typing" Indicator
 
+<img width="49%" alt="Screenshot 2025-04-20 at 3 04 30 PM" src="https://github.com/user-attachments/assets/8a2c43fb-da82-4b2c-8029-fc21b26e722f" />
+<img width="49%" alt="Screenshot 2025-04-20 at 3 04 50 PM" src="https://github.com/user-attachments/assets/7b250eeb-526a-447a-a47e-7086811f6485" />
+<img width="32%" alt="Screenshot 2025-04-20 at 3 05 04 PM" src="https://github.com/user-attachments/assets/da227863-7b13-4ab3-b44a-f28ec8ba8edb" />
+<img width="32%" alt="Screenshot 2025-04-20 at 3 05 23 PM" src="https://github.com/user-attachments/assets/64e1b90d-b189-44c9-a92f-29fa3b86ca6c" />
+<img width="32%" alt="Screenshot 2025-04-20 at 3 05 47 PM" src="https://github.com/user-attachments/assets/8b7f3b8f-efb1-4249-b29f-11b34d79db3d" />
 
-<img width="32%" alt="Screenshot 2025-04-20 at 1 57 39 PM" src="https://github.com/user-attachments/assets/c173f52a-2ac9-40fb-a828-5c33878897d8" />
-<img width="32%" alt="Screenshot 2025-04-20 at 1 58 10 PM" src="https://github.com/user-attachments/assets/19925cf1-69b3-4ad3-9954-0ea6a509c5fa" />
-<img width="32%" alt="Screenshot 2025-04-20 at 1 58 16 PM" src="https://github.com/user-attachments/assets/1c7e36a5-0726-4465-a785-4b706eda0cd7" />
 
